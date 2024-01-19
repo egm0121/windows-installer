@@ -39,7 +39,7 @@
 
     <Feature Id="MainApplication" Title="Main Application" Level="1">
       <ComponentRef Id="wix{{Author}}.exe" />
-      <ComponentRef Id="wixRegistryEntries" />
+      <ComponentRef Id="RegistryEntries" />
     </Feature>
   </Product>
 </Wix>
