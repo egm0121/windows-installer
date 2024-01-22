@@ -1,8 +1,8 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
-  <Product Id="*" Name="{{Title}} Deployment Tool" Language="1033" Codepage="{{Codepage}}" Version="8.9.4.100" UpgradeCode="{{IdAsGuid1}}" Manufacturer="{{Author}}">
+  <Product Id="*" Name="{{Title}} Deployment Tool" Language="1033" Codepage="{{Codepage}}" Version="[[versionFormattedPlaceholder]]" UpgradeCode="{{IdAsGuid1}}" Manufacturer="{{Author}}">
 
     <Package 
-      Description="This package installs a deployment tool for {{Title}}. Not {{Title}} itself. {{Title}} is only installed if a user logs into the machine." 
+      Description="This is a deployment tool for {{Title}} installer. Not {{Title}} itself. {{Title}} is only installed when a user logs in.NOTE: If a user uninstalls the app, it won't re-install on login until  %LocalAppData%/{{Title}} exists." 
       InstallScope="perMachine" 
       Comments="Comments" 
       InstallerVersion="200" 

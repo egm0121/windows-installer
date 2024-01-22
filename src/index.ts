@@ -10,12 +10,12 @@ export { Options } from './options';
 
 const log = require('debug')('electron-windows-installer:main');
 
-export function convertVersion(version: string): string {
+export function convertVersion(version: string, separator = '-'): string {
   const parts = version.split('-');
   const mainVersion = parts.shift();
 
   if (parts.length > 0) {
-    return [mainVersion, parts.join('-').replace(/\./g, '')].join('-');
+    return [mainVersion, parts.join('-').replace(/\./g, '')].join(separator);
   } else {
     return mainVersion as string;
   }
@@ -162,6 +162,14 @@ export async function createWindowsInstaller(options: Options): Promise<void> {
 
     log(await spawn(cmd, args));
   }
+
+  //handle prerelease version not compatible with msi wix template format
+  let templateWxs = await fs.readFile(path.join(vendorPath, 'template.wxs'), 'utf8');
+  let modifiedTemplateWxs = templateWxs.replace(/\[\[versionFormattedPlaceholder\]\]/g, convertVersion(metadata.version, '.'));
+  
+  log('modified wxs template:', modifiedTemplateWxs);
+  
+  await fs.writeFile(path.join(vendorPath, 'template.wxs'), modifiedTemplateWxs);
 
   cmd = path.join(vendorPath, 'Squirrel.exe');
   args = [
