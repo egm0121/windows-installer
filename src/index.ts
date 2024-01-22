@@ -20,6 +20,17 @@ export function convertVersion(version: string, separator = '-'): string {
     return mainVersion as string;
   }
 }
+function convertVersionToMsi(version: string, separator = '.'): string {
+  const parts = version.split('-');
+  const mainVersion = parts.shift();
+
+  if (parts.length > 0) {
+    return [mainVersion, parts.join('-').replace(/\D/g, '')].join(separator);
+  } else {
+    return mainVersion as string;
+  }
+}
+
 
 
 export async function createWindowsInstaller(options: Options): Promise<void> {
@@ -165,7 +176,7 @@ export async function createWindowsInstaller(options: Options): Promise<void> {
 
   //handle prerelease version not compatible with msi wix template format
   let templateWxs = await fs.readFile(path.join(vendorPath, 'template.wxs'), 'utf8');
-  let modifiedTemplateWxs = templateWxs.replace(/\[\[versionFormattedPlaceholder\]\]/g, convertVersion(metadata.version, '.'));
+  let modifiedTemplateWxs = templateWxs.replace(/\[\[versionFormattedPlaceholder\]\]/g, convertVersionToMsi(metadata.version));
   
   log('modified wxs template:', modifiedTemplateWxs);
   
