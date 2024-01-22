@@ -24,21 +24,21 @@
     </Directory>
 
     <DirectoryRef Id="APPLICATIONROOTDIRECTORY">
-      <Component Id="wix{{Author}}.exe" Guid="{{IdAsGuid2}}" Win64="{{Win64YesNo}}">
-        <File Id="wix{{Author}}.exe" Name="{{Id}}DeploymentTool.exe" Source="./Setup.exe" KeyPath="yes"/>
+      <Component Id="DEPLOYMENTTOOLID" Guid="{{IdAsGuid2}}" Win64="{{Win64YesNo}}">
+        <File Id="DEPLOYMENTTOOLID" Name="{{Id}}DeploymentTool.exe" Source="./Setup.exe" KeyPath="yes"/>
       </Component>
     </DirectoryRef>
 
     <DirectoryRef Id="TARGETDIR">
       <Component Id="RegistryEntries" Guid="{{IdAsGuid3}}" Win64="{{Win64YesNo}}">
         <RegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Run">
-          <RegistryValue Type="expandable" Name="{{Id}}Deployment" Value="&quot;[#{{Id}}.exe]&quot; --checkInstall" />
+          <RegistryValue Type="expandable" Name="{{Id}}Deployment" Value="&quot;[#DEPLOYMENTTOOLID]&quot; --checkInstall" />
         </RegistryKey>
       </Component>
     </DirectoryRef>
 
     <Feature Id="MainApplication" Title="Main Application" Level="1">
-      <ComponentRef Id="wix{{Author}}.exe" />
+      <ComponentRef Id="DEPLOYMENTTOOLID" />
       <ComponentRef Id="RegistryEntries" />
     </Feature>
   </Product>
